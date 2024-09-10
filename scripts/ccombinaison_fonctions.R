@@ -1,3 +1,4 @@
+# Mes librairies ----
 library(raster)
 library(terra)
 library(dplyr)
@@ -8,8 +9,6 @@ library(happign)
 library(mapedit)
 library(tidyverse)
 library(sf)
-library(stars)
-library(dplyr)
 
 # Mes fonctions ----
 
@@ -54,8 +53,7 @@ peuplement_combustibilite <- function(X){
 
 # desserte
 
-fonction_desserte <- function (shp,
-                               resolution = 100){
+fonction_desserte <- function (shp){
   desserte <- happign::get_wfs(shp, "BDTOPO_V3:troncon_de_route")
   
   desserte_accessible_V <- subset(desserte, nature!="Sentier")
@@ -69,14 +67,9 @@ fonction_desserte <- function (shp,
   desserte_accessible_V$score[desserte_accessible_V$nature=="Route à 2 chaussées"] <- 1
   
   desserte_accessible_V$score[desserte_accessible_V$nature=="Chemin"] <- 9
-  
-  # Rasteriser le vecteur
-  
+
   raster_desserte <- st_rasterize(desserte_accessible_V %>% 
-                                    dplyr::select(score,geometry),
-                                  res = resolution) 
-  
-  write_stars(raster_desserte, "desserte.tif")
+                                    dplyr::select(score)) 
   
   return(raster_desserte)
 }
@@ -93,12 +86,13 @@ fonction_bat <- function (shp,
   batiment_buf$score <- 1
   
   raster_batiment <- stars::st_rasterize(batiment_buf %>% 
-                                           dplyr::select(score, geometry),
+                                           dplyr::select(score),
                                          )
   write_stars(raster_batiment, "batiment.tif")
   
   return(raster_batiment)
 }
+
 
 # axes routiers
 
@@ -131,29 +125,42 @@ fonction_axe_principaux <- function(zone){
   
   
   raster_Axe_principaux <- stars::st_rasterize(Axe_principaux %>% 
-                                                 dplyr::select(type_de_route,geometry)) 
+                                                 dplyr::select(type_de_route)) 
+    # ce n'est pas type de route qu'il faut renvoyer mais le score et j'ai pas réussi à le faire marcher avec score
   
-
   
   return(raster_Axe_principaux)
 }
+
+
 
 # Pente et topographie
 
 
 # Addition des données raster
-desserte_resampled <- st_warp(fonction_desserte(X), peuplement_descrip(X))
-print(peuplement_descrip(X))  
-print(desserte_resampled)
-plot(peuplement_descrip(X)+desserte_resampled)
 
 addition <- function(){
   X = mapedit::drawFeatures()
-  liste_fonctions <- c(peuplement_inflammabilite(), peuplement_combustibilite(), 
-             fonction_desserte(), fonction_bat(), fonction_axe_principaux())
-  liste_raster <- c()
+  liste_fonctions <- list(peuplement_inflammabilite, 
+                          peuplement_combustibilite,
+                          fonction_desserte,
+                          fonction_bat,
+                          fonction_axe_principaux)
+  liste_raster <- lapply(liste_fonctions, function(f) f(X))
+  liste_raster_resampled <- lapply(liste_raster, function(raster) 
+    st_warp(raster, liste_raster[[1]]))
   
-}
+  # Initialiser un raster vide pour stocker la somme
+  raster_somme <- liste_raster_resampled[[1]]  # Crée un raster vide basé sur le premier raster
+  
+  # Boucle pour additionner tous les rasters
+  for (i in 2:length(liste_raster_resampled)) {
+    raster_somme <- raster_somme + liste_raster_resampled[[i]]
+  }
+  return(raster_somme)}
+
+
+
 
 
 

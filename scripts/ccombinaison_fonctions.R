@@ -160,34 +160,3 @@ addition <- function(){
   return(raster_somme)}
 
 
-
-
-
-
-
-# brain storming
-raster_nouveau <- rast(ext= ext(peuplement_descrip), resolution= 100)
-peuplement_resample <- resample(peuplement_descrip(X),raster_nouveau, method= "bilinear")
-
-happign::get_apikeys()
-X = mapedit::drawFeatures()
-concat_fonctions <- function(X, resolution = 100, buffer = 50) 
-  message("Exécution de la fonction peuplement_descrip...")
-  peuplement_result <- peuplement_descrip(X)
-  message("Exécution de la fonction fonction_desserte...")
-  desserte_result <- fonction_desserte(X, resolution)
-  message("Exécution de la fonction fonction_bat...")
-  batiment_result <- fonction_bat(X, resolution)
-  print(st_crs(batiment_result))
-  message("Fusion des résultats...")
-  resultat_combine <- list(peuplement_inflammability = peuplement_result[[1]],
-                           peuplement_combustibility = peuplement_result[[2]],
-                           desserte = desserte_result,
-                           batiment = batiment_result)
-  print(lapply(resultat_combine, class))
-  message("Sauvegarde des résultats...")
-  write_stars(resultat_combine$peuplement[[1]], "peuplement_inflammability.tif")
-  write_stars(resultat_combine$peuplement[[2]], "peuplement_combustibility.tif")
-  write_stars(resultat_combine$desserte, "desserte.tif")
-  write_stars(resultat_combine$batiment, "batiment.tif")
-  return(resultat_combine)

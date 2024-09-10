@@ -138,7 +138,7 @@ fonction_axe_principaux <- function(zone){
 
 
 # Addition des données raster
-
+ 
 addition <- function(){
   X = mapedit::drawFeatures()
   liste_fonctions <- list(peuplement_inflammabilite, 

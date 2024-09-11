@@ -76,18 +76,28 @@ fonction_desserte <- function (shp){
 
 # bâtiments sensibles
 
-fonction_bat <- function (shp,
+fonction_bat <- function (X,
                           buffer = 50){
-  batiment <- happign::get_wfs(shp,"BDTOPO_V3:batiment")
+  batiment <- happign::get_wfs(X,"BDTOPO_V3:batiment")
   print(st_crs(batiment)) 
   
-  batiment_buf <- st_buffer(x = batiment, 
-                            buffer) 
-  batiment_buf$score <- 1
+  batiment_buf <- st_buffer(x = batiment, 50)
+  
+  intersections <- st_intersects(batiment_buf, batiment)
+  
+  batiment_buf$nb_batiments <- lengths(intersections)
+  
+  batiment_buf$classe_bâtis <- ifelse(
+    batiment_buf$nb_batiments <= 3,"bâtis isolé",
+    ifelse(batiment_buf$nb_batiments <= 50,"bâtis diffus","bâtis sans classe"))
+                             
+  batiment_buf$score <- case_when(
+    batiment_buf$classe_bâtis == "bâtis isolé" ~ 1,       
+    batiment_buf$classe_bâtis == "bâtis diffus" ~ 2,     
+    batiment_buf$classe_bâtis == "bâtis sans classe" ~ 3)
   
   raster_batiment <- stars::st_rasterize(batiment_buf %>% 
-                                           dplyr::select(score),
-                                         )
+                                           dplyr::select(score))
   write_stars(raster_batiment, "batiment.tif")
   
   return(raster_batiment)
@@ -131,7 +141,6 @@ fonction_axe_principaux <- function(zone){
   
   return(raster_Axe_principaux)
 }
-
 
 
 # Pente et topographie

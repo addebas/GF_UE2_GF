@@ -1,0 +1,42 @@
+---
+title: "UE2 - Projet risques feux de forêt"
+author: "Adrien DEBAS"
+date: "2024-09-11"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+Les changements climatiques impliquent une augmentation du risque de feux de forêt en France ([`Lerat & Poss, 2021`](https://doi.org/10.20870/revforfr.2021.7209); [`Pimont et al., 2023`](https://hal.inrae.fr/hal-04149936)). L'anticipation est considérée comme un des leviers de la lutte contre les feux de forêt ([`Michaut, 2009`](https://hal.science/hal-03556263)). Les données que MeteoFrance met à disposition sur le [`portail DRIAS`](https://www.drias-climat.fr/commande) permettent d'anticiper le risque incendie à l'aide de la méthode canadienne d'Indice Feu Météorologique (IFM).
+
+L'objectif de ce projet est d'étudier de quelle manière les données DRIAS peuvent être combinées aux données IGN dans une fonction R pour être utiles à la gestion forestière. La méthode de caractérisation du risque incendie sera présentée, ainsi que la manière dont les données ont été acquises puis traitées. Les sorties de la fonction seront ensuite détaillées, puis une partie de discussion des résultats et de proposition de réflexion sera abordée.
+
+# Méthode
+
+## I) Données DRIAS
+
+### a. Présentation des données
+
+La méthode d'Indice Feu Météorologique (IFM) permet de caractériser la propension d'un feu à s'aggraver et à se propager à l'aide de variables météorologiques (température, humidité de l'air, vitesse du vent et cumul des précipitations). L'IFM est ensuite représenté sur une maille [`SAFRAN`](https://doi.org/10.57745/1PDFNL) de 8 km par 8 km.
+
+Deux manières de l'estimer sont possibles. La première consiste à se baser sur des relevés historiques pour calculer cet indice *a posteriori* ; la seconde consiste à utiliser des modèles climatiques pour simuler les conditions météorologiques du futur. Ces modèles se basent sur des hypothèses d'émissions de $CO_2$ dans l'atmosphère, exprimées en scénarios de forçage radiatif (Representative Concentration Pathway, RCP)
+
+### b. Téléchargement des données
+
+La méthode suivante a été appliquée pour télécharger les données DRIAS :
+
+1.  Créer un compte sur l'[`espace de Données et Produits du portail DRIAS`](https://www.drias-climat.fr/commande)`.`
+
+2.  Sur la page "Catalogue des produits", sélectionner "Indicateurs FeuMeteo-2022" dans le sous-dossier "Risques Naturels - Feux de forêts".
+
+    ![1. Portail DRIAS, localisation du formulaire pour accéder aux indices IFM.](drias_portail.jpg)
+
+3.  Un formulaire de téléchargement s'ouvre.
+
+Voies carrossables : 50% des feux se déclarent à moins de 50 mètres d'une voie carrossable, et 40% à moins de 50 mètres d'une habitation ([`Lafarge, 2006`](https://infodoc.agroparistech.fr/visionneuse.php?lvl=afficheur&explnum=4152#page/19/mode/1up)).
+
+# Bibliographie

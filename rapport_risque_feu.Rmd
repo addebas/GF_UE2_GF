@@ -17,6 +17,17 @@ L'anticipation est un des leviers de la lutte contre les feux de forêt ([Michau
 
 Voies carrossables : 50% des feux se déclarent à moins de 50 mètres d'une voie carrossable, et 40% à moins de 50 mètres d'une habitation ([Lafarge, 2006](https://infodoc.agroparistech.fr/visionneuse.php?lvl=afficheur&explnum=4152#page/19/mode/1up)).
 
+fn
+fn
+fb
+fn
+fn
+$fb$
+fb$
+fb$fb$
+fbs$fbajh f£
+DBQZSVs
+
 
 ```{r}
 peuplement_inflammabilite <- function(X){

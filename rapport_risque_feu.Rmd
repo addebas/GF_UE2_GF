@@ -39,6 +39,8 @@ La méthode suivante a été appliquée pour télécharger les données DRIAS :
 
 Voies carrossables : 50% des feux se déclarent à moins de 50 mètres d'une voie carrossable, et 40% à moins de 50 mètres d'une habitation ([`Lafarge, 2006`](https://infodoc.agroparistech.fr/visionneuse.php?lvl=afficheur&explnum=4152#page/19/mode/1up)).
 
+ici
+
 ```{r_fonction-inflammibilite}
 peuplement_inflammabilite <- function(X){
   pplt_aleatoire <- happign::get_wfs(X,"LANDCOVER.FORESTINVENTORY.V2:formation_vegetale")

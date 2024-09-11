@@ -39,9 +39,8 @@ fonction_axe_principaux <- function(shp,
   
   Axe_principaux$score[Axe_principaux$type_de_route=="Route intercommunale"] <- 1
   
-  
   raster_Axe_principaux <- stars::st_rasterize(Axe_principaux %>% 
-                                  dplyr::select(type_de_route,geometry),
+                                  dplyr::select(score, geometry),
                                 res = resolution) 
   
   write_stars(raster_Axe_principaux, "Axe_principaux.tif")

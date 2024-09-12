@@ -12,7 +12,7 @@ header-includes:
   - \usepackage{enumitem}
   - \setlistdepth{10}
 
-  - ```{r load_packages, include=FALSE}
+ ```{r load_packages, include=FALSE}
 library(happign)
 library(raster)
 library(terra)
@@ -24,4 +24,5 @@ library(mapedit)
 library(tidyverse)
 library(sf)
 library(tinytex)
+```
 library(ggplot2)

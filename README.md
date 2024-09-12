@@ -11,3 +11,17 @@ header-includes:
   - \setcounter{secnumdepth}{10}
   - \usepackage{enumitem}
   - \setlistdepth{10}
+
+  - ```{r load_packages, include=FALSE}
+library(happign)
+library(raster)
+library(terra)
+library(dplyr)
+library(stars)
+library(readxl)
+library(tmap)
+library(mapedit)
+library(tidyverse)
+library(sf)
+library(tinytex)
+library(ggplot2)

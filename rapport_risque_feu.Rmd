@@ -328,7 +328,66 @@ fonction_bat <- function (X,
 
 Il semble également important de repérer et de classifier les bâtiments dans les zones forestières sélectionnées pour prendre en compte le risque matériel et implicitement humain dans les zones à risque. Pour cela, l'utilisation de la BDTOPO bâtiments de l'IGN a été privilégiée pour repérer les bâtiments de la zone (identique à celle précedemment sélectionnée). Une zone buffer de 50 m autour des infrastructures sélectionnées a été faite pour matérialiser le risque géographique lié aux incendies et à leur propagation. Pour catégoriser le risque de façon plus précise et plus simple pour lui créer une note, un comptage des bâtiments appartenant à une même zone buffer a été effectué aboutissant à 3 classes de bâtis : isolé (moins de 3 bâtiments dans la zone buffer), diffus (entre 3 et 50 bâtiments) ou sans classe (plus de 50). Ces zones buffer sont ensuite rasterisées pour être visulaisées via un fichier tif.
 
+# Importance des axes routiers principaux 
 
+
+La donnée sur les axes principaux nous sera utile comme facteur de risque dans
+l'évaluation des risques d'incendies.
+
+L'objectif principal : créer une sous-fonction qui va afficher les axes routiers
+principaux, comme les autoroutes et les départementales, et leur attribuer un
+score de risque.
+
+Objectif du code : écrire un code qui va chercher la donnée des axes principaux
+sous forme vectorielle depuis Happign, y attribuer un score, puis la rasteriser.
+
+Premièrement, il faudra trier les différents types de routes en utilisant la
+fonction subset afin de ne garder que les axes principaux (on supprime les voies
+cyclables et les pistes vertes).
+
+Deuxièmement, on attribue un score aux axes principaux pour évaluer leur impact
+sur le risque d'incendie. Ce score sera additionné à celui des dessertes.
+
+Troisièmement, on rasterise cette sous-fonction afin de pouvoir additionner
+les couches plus tard.
+
+```{r_fonction axes_principaux}
+fonction_axes_principaux <- function(zone){
+  route <- happign::get_wfs(zone,
+                            "BDTOPO_V3:route_numerotee_ou_nommee")
+  
+  route_departementale <- subset(route, type_de_route=="Départementale")
+  
+  route_autoroute <- subset(route, type_de_route=="Autoroute")
+  
+  route_nommée <- subset(route, type_de_route=="Route_nommée")
+  
+  route_intercommunale <- subset(route, type_de_route=="Route intercommunale")
+  
+  route_européenne <- subset(route, type_de_route=="Route européenne")
+  
+  Axe_principaux <- rbind(
+    route_departementale, route_autoroute, route_intercommunale, route_nommée)
+  
+  Axe_principaux$score[Axe_principaux$type_de_route=="Départementale"] <- 2
+  
+  Axe_principaux$score[Axe_principaux$type_de_route=="Autoroute"] <- 2
+  
+  Axe_principaux$score[Axe_principaux$type_de_route=="Route_nommée"] <- 1
+  
+  Axe_principaux$score[Axe_principaux$type_de_route=="Route intercommunale"] <- 1
+  
+  Axe_principaux$score[Axe_principaux$type_de_route=="Route européenne"] <- 1
+  
+  #Axes_principaux_buff <- st_buffer(Axe_principaux, 15)
+  
+  raster_Axe_principaux <- stars::st_rasterize(Axe_principaux %>% 
+                                                 dplyr::select(score)
+                                               ) 
+  
+  
+  
+  return(raster_Axe_principaux)}
 # Bibliographie
 
 > > > > > > > ea47431e3c902c66766a5ef6c096bf8c9e0b80f9

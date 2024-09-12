@@ -176,6 +176,67 @@ fonction_desserte <- function (shp){
 # Importance des axes routiers principaux 
 
 
+La donnée sur les axes principaux nous sera utile comme facteur de risque dans
+l'évaluation des risques d'incendies.
+
+L'objectif principal : créer une sous-fonction qui va afficher les axes routiers
+principaux, comme les autoroutes et les départementales, et leur attribuer un
+score de risque.
+
+Objectif du code : écrire un code qui va chercher la donnée des axes principaux
+sous forme vectorielle depuis Happign, y attribuer un score, puis la rasteriser.
+
+Premièrement, il faudra trier les différents types de routes en utilisant la
+fonction subset afin de ne garder que les axes principaux (on supprime les voies
+cyclables et les pistes vertes).
+
+Deuxièmement, on attribue un score aux axes principaux pour évaluer leur impact
+sur le risque d'incendie. Ce score sera additionné à celui des dessertes.
+
+Troisièmement, on rasterise cette sous-fonction afin de pouvoir additionner
+les couches plus tard.
+
+```{r_fonction axes_principaux}
+
+```
+
+
+
+
+
+
+
+# Importance des batiments 
+
+La donnée sur les bâtiments nous sera utile comme facteur de risque dans 
+l'évaluation des risques d'incendies.
+
+L'objectif principal : créer une sous-fonction qui va afficher les bâtiments et 
+leur attribuer un buffer.
+
+Objectif du code : écrire un code qui va chercher la donnée des bâtiments sous 
+forme vectorielle depuis Happign, y attribuer un buffer, puis la rasteriser.
+
+Premièrement, il faudra créer une zone tampon autour des bâtiments grâce à la 
+fonction st_buffer. Cette zone définit un lieu où les risques d'incendie sont 
+élevés à cause de la proximité des habitations (mégots, BBQ et autres activités
+humaines). La zone tampon est définie sur 50 mètres, conformément aux obligations
+légales de débroussaillement.
+
+Deuxièmement, on rasterise cette fonction afin de pouvoir additionner les 
+couches plus tard.
+
+
+```{r_fonction_bat
+
+```
+
+
+
+
+
+
+
 
 # Bibliographie
 >>>>>>> ea47431e3c902c66766a5ef6c096bf8c9e0b80f9

@@ -197,7 +197,42 @@ Troisièmement, on rasterise cette sous-fonction afin de pouvoir additionner
 les couches plus tard.
 
 ```{r_fonction axes_principaux}
-
+fonction_axes_principaux <- function(zone){
+  route <- happign::get_wfs(zone,
+                            "BDTOPO_V3:route_numerotee_ou_nommee")
+  
+  route_departementale <- subset(route, type_de_route=="Départementale")
+  
+  route_autoroute <- subset(route, type_de_route=="Autoroute")
+  
+  route_nommée <- subset(route, type_de_route=="Route_nommée")
+  
+  route_intercommunale <- subset(route, type_de_route=="Route intercommunale")
+  
+  route_européenne <- subset(route, type_de_route=="Route européenne")
+  
+  Axe_principaux <- rbind(
+    route_departementale, route_autoroute, route_intercommunale, route_nommée)
+  
+  Axe_principaux$score[Axe_principaux$type_de_route=="Départementale"] <- 2
+  
+  Axe_principaux$score[Axe_principaux$type_de_route=="Autoroute"] <- 2
+  
+  Axe_principaux$score[Axe_principaux$type_de_route=="Route_nommée"] <- 1
+  
+  Axe_principaux$score[Axe_principaux$type_de_route=="Route intercommunale"] <- 1
+  
+  Axe_principaux$score[Axe_principaux$type_de_route=="Route européenne"] <- 1
+  
+  #Axes_principaux_buff <- st_buffer(Axe_principaux, 15)
+  
+  raster_Axe_principaux <- stars::st_rasterize(Axe_principaux %>% 
+                                                 dplyr::select(score)
+                                               ) 
+  
+  
+  
+  return(raster_Axe_principaux)}
 ```
 
 

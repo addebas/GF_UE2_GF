@@ -90,7 +90,7 @@ fonction_desserte <- function (X){
   desserte_accessible_V <- subset(desserte_accessible_V, nature != "Escalier")
   
   desserte_accessible_V$score[desserte_accessible_V$nature 
-                              == "Route empierrée"] <- 5
+                              == "Route empierrée"] <- 3
   
   desserte_accessible_V$score[desserte_accessible_V$nature 
                               == "Route à 1 chaussée"] <- 2
@@ -99,7 +99,7 @@ fonction_desserte <- function (X){
                               == "Route à 2 chaussées"] <- 1
   
   desserte_accessible_V$score[desserte_accessible_V$nature 
-                              == "Chemin"] <- 9
+                              == "Chemin"] <- 4
 
   raster_desserte <- st_rasterize(desserte_accessible_V %>% 
                                     dplyr::select(score)) 
@@ -136,7 +136,7 @@ fonction_bat <- function (X,
   return(raster_batiment)
 }
 
-# Axes routiers princiapux augmentant le risque de départ d'incendie
+# Axes routiers principaux augmentant le risque de départ d'incendie
 
 fonction_axes_principaux <- function(zone){
   route <- happign::get_wfs(zone,

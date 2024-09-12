@@ -173,6 +173,12 @@ get.drias.gpkg <-
     raster_drias_moyen <- as(raster_drias_moyen, "SpatRaster")
     raster_drias_lointain <- as(raster_drias_lointain, "SpatRaster")
     
+    # reprojection des couches en WGS84
+    
+    raster_drias_proche <- project(raster_drias_proche, "EPSG:4326")
+    raster_drias_moyen <- project(raster_drias_moyen, "EPSG:4326")
+    raster_drias_lointain <- project(raster_drias_lointain, "EPSG:4326")
+    
     # rasterize ----
     
     writeRaster(raster_drias_proche, "drias.gpkg",

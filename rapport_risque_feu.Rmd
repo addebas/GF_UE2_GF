@@ -310,6 +310,9 @@ fonction_desserte <- function (shp) {
   return(raster_desserte)
 }
 ```
+# Prise en compte des bâtiments à risque 
+
+Il semble également important de repérer et de classifier les bâtiments dans les zones forestières sélectionnées pour prendre en compte le risque matériel et implicitement humain dans les zones à risque. Pour cela, l'utilisation de la BDTOPO bâtiments de l'IGN a été privilégiée pour repérer les bâtiments de la zone (identique à celle précedemment sélectionnée). Une zone buffer de 50 m autour des infrastructures sélectionnées a été faite pour matérialiser le risque géographique lié aux incendies et à leur propagation. Pour catégoriser le risque de façon plus précise et plus simple pour lui créer une note, un comptage des bâtiments appartenant à une même zone buffer a été effectué aboutissant à 3 classes de bâtis : isolé (moins de 3 bâtiments dans la zone buffer), diffus (entre 3 et 50 bâtiments) ou sans classe (plus de 50). Ces zones buffer sont ensuite rasterisées pour être visulaisées via un fichier tif.
 
 ```{r_sous-fonction bâtiments sensibles}
 fonction_bat <- function (X,
@@ -339,9 +342,6 @@ fonction_bat <- function (X,
   return(raster_batiment)
 }
 ```
-# Prise en compte des bâtiments à risque 
-
-Il semble également important de repérer et de classifier les bâtiments dans les zones forestières sélectionnées pour prendre en compte le risque matériel et implicitement humain dans les zones à risque. Pour cela, l'utilisation de la BDTOPO bâtiments de l'IGN a été privilégiée pour repérer les bâtiments de la zone (identique à celle précedemment sélectionnée). Une zone buffer de 50 m autour des infrastructures sélectionnées a été faite pour matérialiser le risque géographique lié aux incendies et à leur propagation. Pour catégoriser le risque de façon plus précise et plus simple pour lui créer une note, un comptage des bâtiments appartenant à une même zone buffer a été effectué aboutissant à 3 classes de bâtis : isolé (moins de 3 bâtiments dans la zone buffer), diffus (entre 3 et 50 bâtiments) ou sans classe (plus de 50). Ces zones buffer sont ensuite rasterisées pour être visulaisées via un fichier tif.
 
 # Importance des axes routiers principaux 
 

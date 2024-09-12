@@ -12,6 +12,7 @@
   - \usepackage{enumitem}
   - \setlistdepth{10}
 
+### Les différents packages à installer 
  ```{r load_packages, include=FALSE}
 library(happign)
 library(raster)

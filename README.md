@@ -5,7 +5,7 @@
  *** 
  
 ### Résumé:
-Sujet de réflexion sur l'analyse des données DRIAS et du risque incendie. Nous avons ici réalisé une fonction principale ayant pour but de cartographier les zones à risque d'incendie selon différents facteurs. Pour cela, nous avons créé plusieurs sous-fonctions prenant en compte les données DRIAS, ainsi que la desserte forestière, les axes routiers principaux, les bâtiments à risque, l'inflammabilité et la combustibilité.
+Sujet de réflexion sur l'analyse des données DRIAS et du risque incendie. Nous avons ici réalisé une fonction principale ayant pour but de cartographier les zones à risque d'incendie selon différents facteurs. Pour cela, nous avons créé plusieurs sous-fonctions prenant en compte les données DRIAS, ainsi que la desserte forestière, les axes routiers principaux, les bâtiments à risque, l'inflammabilité et la combustibilité des peuplements forestiers.
 
 *** 
 

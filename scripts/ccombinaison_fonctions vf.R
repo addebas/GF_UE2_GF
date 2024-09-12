@@ -303,4 +303,61 @@ for (i in 1:length(liste_raster_conv)) {
   get.drias.gpkg(safran, indices_feu, nomGPKG)
   
   return()}
- 
+
+
+
+
+
+
+# Affichage des couches sur Leaflet ----
+
+library(leaflet) # package de base
+library(leafem) # package de widgets dont "addMouseCoordinates"
+library(leaflet.extras)
+library(raster)
+
+carte_risques <- function() {
+  X = mapedit::drawFeatures()
+  
+  # charge les rasters et les convertir en SpatRaster pour les utiliser
+  
+  inflama_raster <- as(peuplement_inflammabilite(X), "SpatRaster")
+  combusti_raster <- as(peuplement_combustibilite(X), "SpatRaster")
+  raster_desserte <- as(fonction_desserte(X), "SpatRaster")
+  raster_batiment <- as(fonction_bat(X), "SpatRaster")
+  raster_Axe_principaux <- as(fonction_axes_principaux(X), "SpatRaster")
+  
+  map <- leaflet() %>%
+    addTiles() %>%
+    addRasterImage(inflama_raster, opacity = 0.8, 
+                   group = "inflama_raster") %>%
+    addRasterImage(combusti_raster, opacity = 0.8, 
+                   group = "combusti_raster") %>%
+    addRasterImage(raster_desserte, opacity = 0.8, 
+                   group = "raster_desserte") %>%
+    addRasterImage(raster_batiment, opacity = 0.8, 
+                   group = "raster_batiment") %>%
+    addRasterImage(raster_Axe_principaux,
+                   opacity = 0.8,
+                   group = "raster_Axe_principaux") %>%
+    addLayersControl(
+      overlayGroups = c(
+        "inflama_raster",
+        "combusti_raster",
+        "raster_desserte",
+        "raster_batiment",
+        "raster_Axe_principaux"
+      ),
+      options = layersControlOptions(collapsed = FALSE)
+    )
+  map
+  
+  addMouseCoordinates(map) %>%  
+    # Ajout des coordonnées GPS du pointeur de la souris
+    addResetMapButton() %>%  # ajout du bouton "reset" pour recentrage carte
+    addFullscreenControl() %>% # ajout du basculement en mode plein écran
+    addSearchOSM() %>% # ajout de la barre de recherche Openstreetmap
+    
+    addMiniMap(toggleDisplay = FALSE) # posibilité de réduite la minimap
+  
+}

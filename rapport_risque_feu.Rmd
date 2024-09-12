@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ---
 title: "UE2 - Projet risques feux de forêt"
 author: "Adrien DEBAS"

@@ -279,8 +279,8 @@ addition <- function(){
 
 # Téléchargement des rasters sur un géopackage
 
-addition_gpkg <- function(nomGPKG){
-  X = mapedit::drawFeatures()
+addition_gpkg <- function(X = mapedit::drawFeatures(),
+                          nomGPKG){
   liste_fonctions <- list(peuplement_inflammabilite, 
                           peuplement_combustibilite,
                           fonction_desserte,

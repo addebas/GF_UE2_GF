@@ -1,11 +1,6 @@
-### GF_UE2_R_SIG
-
-##### Titre: "UE2 - Projet risques feux de forêt"
+#### Titre: "UE2 - Projet risques feux de forêt"
 * Auteurs: "DEBAS Adrien, FERGANI Nadjim, GIOVINAZZO Esteban, GOUFFON Valentin, VETTER Johann"
 ##### Date: "2024-09-12"
-##### Sortie: 
-  pdf_document:
-    keep_tex: true
     
 #### Les différents packages à installer 
  ```{r load_packages, include=FALSE}

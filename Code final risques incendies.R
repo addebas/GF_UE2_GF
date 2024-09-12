@@ -315,8 +315,8 @@ for (i in 1:length(liste_raster_conv)) {
 
 # Affichage des couches sur Leaflet ----
 
-carte_risques <- function() {
-  X = mapedit::drawFeatures()
+carte_risques <- function(X = mapedit::drawFeatures()) {
+ 
   
   # charge les rasters et les convertir en SpatRaster pour les utiliser
   

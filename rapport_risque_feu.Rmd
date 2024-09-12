@@ -134,6 +134,22 @@ peuplement_combustibilite <- function(X){
 
 L'inflammabilité n'est pas un facteur suffisant pour caractériser le risque incendie à l'échelle des peuplements d'une zone. En effet, certaines essences peuvent être très facilement inflammables mais pas nécessairement très combustibles, c'est à dire ayant la propriété de brûler en se combinant avec l'oxygène de l'air ou un autre comburant. Ce sont les feuillus qui ont le plus fort pouvoir calorifique et ainsi la meilleure capacité de combustibilité. La méthode de sélection, d'attribution d'une note (dans le champ des centaines) pour hiérarchiser les peuplements en fonction du risque ainsi que la rastérisation des couches s'effectuent de la même façon que pour l'inflammabilité.
 
+
+# Importance de la desserte forestière
+
+La donnée sur les dessertes nous sera utile en tant que facteur de lutte contre les incendies.
+
+Objectif principal : ajouter à la fonction principale une sous-fonction desserte qui va afficher les dessertes avec des scores différents selon leur
+nature.
+
+Objectif du code : écrire un code qui va chercher la donnée desserte sous forme vectorielle depuis Happign, y attribuer un score, puis la convertir en raster.
+
+Premièrement, il faudra trier les différentes natures de dessertes et ne garder que celles qui sont utiles pour la DFCI (exclure les sentiers et les pistes). On utilisera la fonction subset.
+
+Deuxièmement, on attribue un score à chaque type de route selon la facilité d'accès et de circulation.
+
+Troisièmement, on rasterise cette sous-fonction afin de pouvoir additionner les couches plus tard.
+
 ```{r_fonction desserte}
 fonction_desserte <- function (shp){
   desserte <- happign::get_wfs(shp, "BDTOPO_V3:troncon_de_route")
@@ -157,7 +173,9 @@ fonction_desserte <- function (shp){
 }
 ```
 
-# Importance de la desserte forestière
+# Importance des axes routiers principaux 
+
+
 
 # Bibliographie
 >>>>>>> ea47431e3c902c66766a5ef6c096bf8c9e0b80f9

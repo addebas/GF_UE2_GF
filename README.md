@@ -22,4 +22,5 @@ library(sf)
 library(tinytex)
 library(ggplot2)
 ```
-### Résumé: Sujet de reflexion sur l'analyse des données DRIAS et du risque incendie. Nous avons ici realiser une fonction principale qui à pour but de cartographier les zones à risque d'incendie selon differents facteurs. Pour cela nous avons créé plusieurs sous fonctions prenant en compte : les donées DRIAS mais aussi la desserte forestière, les axes routiers principaux, les batiments à risque, la prise en compte de l'inflammabilité et de la combustbilité. 
+### Fonctionnnement de la fonction addition_gpkg : Elle prend en entrée une zone d'étude oub demande une zone d'etude a l'operateur. elle renverra ensuite une cartographie sur les alléas et les enjeux qui definissent les risques d'incendie. Les données DRIAS devront  
+### Résumé: Sujet de réflexion sur l'analyse des données DRIAS et du risque incendie. Nous avons ici réalisé une fonction principale ayant pour but de cartographier les zones à risque d'incendie selon différents facteurs. Pour cela, nous avons créé plusieurs sous-fonctions prenant en compte les données DRIAS, ainsi que la desserte forestière, les axes routiers principaux, les bâtiments à risque, l'inflammabilité et la combustibilité.

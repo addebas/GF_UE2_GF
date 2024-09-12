@@ -215,9 +215,6 @@ get.drias.gpkg <-
     
     
     
-    drias_proche_raster <- rast(safran_drias_proche)
-    
-    
     raster_drias_proche <- stars::st_rasterize(safran_drias_proche %>% 
                                                  dplyr::select(V12, 
                                                                location))

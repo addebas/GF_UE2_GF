@@ -126,7 +126,8 @@ fonction_bat <- function (X,
   
   batiment_buf$classe_bâtis <- ifelse(
     batiment_buf$nb_batiments <= 3, "bâtis isolé",
-    ifelse(batiment_buf$nb_batiments <= 50, "bâtis diffus", "bâtis sans classe"))
+    ifelse(batiment_buf$nb_batiments <= 50, "bâtis diffus",
+           "bâtis sans classe"))
   
   batiment_buf$score <- case_when(
     batiment_buf$classe_bâtis == "bâtis isolé" ~ 1,       
@@ -146,28 +147,29 @@ fonction_axes_principaux <- function(zone){
   route <- happign::get_wfs(zone,
                             "BDTOPO_V3:route_numerotee_ou_nommee")
   
-  route_departementale <- subset(route, type_de_route=="Départementale")
+  route_departementale <- subset(route, type_de_route == "Départementale")
   
-  route_autoroute <- subset(route, type_de_route=="Autoroute")
+  route_autoroute <- subset(route, type_de_route == "Autoroute")
   
-  route_nommée <- subset(route, type_de_route=="Route_nommée")
+  route_nommée <- subset(route, type_de_route == "Route_nommée")
   
-  route_intercommunale <- subset(route, type_de_route=="Route intercommunale")
+  route_intercommunale <- subset(route, type_de_route == "Route intercommunale")
   
-  route_européenne <- subset(route, type_de_route=="Route européenne")
+  route_européenne <- subset(route, type_de_route == "Route européenne")
   
   Axe_principaux <- rbind(
     route_departementale, route_autoroute, route_intercommunale, route_nommée)
   
-  Axe_principaux$score[Axe_principaux$type_de_route=="Départementale"] <- 2
+  Axe_principaux$score[Axe_principaux$type_de_route == "Départementale"] <- 2
   
-  Axe_principaux$score[Axe_principaux$type_de_route=="Autoroute"] <- 2
+  Axe_principaux$score[Axe_principaux$type_de_route == "Autoroute"] <- 2
   
-  Axe_principaux$score[Axe_principaux$type_de_route=="Route_nommée"] <- 1
+  Axe_principaux$score[Axe_principaux$type_de_route == "Route_nommée"] <- 1
   
-  Axe_principaux$score[Axe_principaux$type_de_route=="Route intercommunale"] <- 1
+  Axe_principaux$score[Axe_principaux$type_de_route == 
+                         "Route intercommunale"] <- 1
   
-  Axe_principaux$score[Axe_principaux$type_de_route=="Route européenne"] <- 1
+  Axe_principaux$score[Axe_principaux$type_de_route == "Route européenne"] <- 1
   
   #Axes_principaux_buff <- st_buffer(Axe_principaux, 15)
   
@@ -202,6 +204,11 @@ get.drias.gpkg <-
     
     safran <- st_transform(safran, crs = 2154)
     
+    # arrondi des indicateurs à l'unité
+    
+    safran_drias$V12 <- round(safran_drias$V12, 0)
+    safran_drias$V12 <- as.integer(safran_drias$V12) 
+    
     # jointure safran/drias ----
     
     safran_drias <- st_join(safran, indices_feu_sf)
@@ -212,10 +219,7 @@ get.drias.gpkg <-
     safran_drias_moyen <- safran_drias[safran_drias$V5 == "H2", ]
     safran_drias_lointain <- safran_drias[safran_drias$V5 == "H3", ] 
     
-    # arrondi des indicateurs à l'unité
-    
-    safran_drias$V12 <- round(safran_drias$V12, 0)
-    safran_drias$V12 <- as.integer(safran_drias$V12)
+
     
     
     
@@ -270,7 +274,8 @@ addition <- function(){
   
   
   # Initialiser un raster vide pour stocker la somme
-  raster_somme <- liste_raster_resampled[[1]]  # Crée un raster vide basé sur le premier raster
+  raster_somme <- liste_raster_resampled[[1]]  
+  
   
   # Boucle pour additionner tous les rasters
   for (i in 2:length(liste_raster_resampled)) {
@@ -316,7 +321,7 @@ for (i in 1:length(liste_raster_conv)) {
 # Affichage des couches sur Leaflet ----
 
 carte_risques <- function(X = mapedit::drawFeatures()) {
- 
+  
   
   # charge les rasters et les convertir en SpatRaster pour les utiliser
   

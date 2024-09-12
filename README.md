@@ -22,5 +22,11 @@ library(sf)
 library(tinytex)
 library(ggplot2)
 ```
-### Fonctionnnement de la fonction addition_gpkg : Elle prend en entrée une zone d'étude oub demande une zone d'etude a l'operateur. elle renverra ensuite une cartographie sur les alléas et les enjeux qui definissent les risques d'incendie. Les données DRIAS devront  
+### Modèles de prévisions
+SAFRAN (safran.gpkg)
+ALADIN 
+
+### Fonctionnement de la fonction addition_gpkg : Elle prend en entrée une zone d'étude (x) ou demande une zone d'étude à l'opérateur, ainsi qu'une chaîne de caractères qui sera le nom du fichier GPKG de sortie. La fonction renverra ensuite une carte des aléas et des enjeux qui définissent le risque d'incendie. Les données DRIAS ne pouvant pas être lues directement sur RStudio, il a fallu installer le package SAFRAN (safran.gpkg), un modèle de Météo-France qui permet de reconstituer les conditions météorologiques, ainsi qu'ALADIN63, un modèle Météo-France de prévision météorologique.
+
+
 ### Résumé: Sujet de réflexion sur l'analyse des données DRIAS et du risque incendie. Nous avons ici réalisé une fonction principale ayant pour but de cartographier les zones à risque d'incendie selon différents facteurs. Pour cela, nous avons créé plusieurs sous-fonctions prenant en compte les données DRIAS, ainsi que la desserte forestière, les axes routiers principaux, les bâtiments à risque, l'inflammabilité et la combustibilité.

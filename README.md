@@ -22,9 +22,9 @@ library(sf)
 library(tinytex)
 library(ggplot2)
 ```
-### Modèles de prévisions
+### Modèles de prévisions Météo-France
 - SAFRAN (safran.gpkg)
-- ALADIN 
+- ALADIN63
 
 ### Fonctionnement de la fonction addition_gpkg : Elle prend en entrée une zone d'étude (x) ou demande une zone d'étude à l'opérateur, ainsi qu'une chaîne de caractères qui sera le nom du fichier GPKG de sortie. La fonction renverra ensuite une carte des aléas et des enjeux qui définissent le risque d'incendie. Les données DRIAS ne pouvant pas être lues directement sur RStudio, il a fallu installer le package SAFRAN (safran.gpkg), un modèle de Météo-France qui permet de reconstituer les conditions météorologiques, ainsi qu'ALADIN63, un modèle Météo-France de prévision météorologique.
 
